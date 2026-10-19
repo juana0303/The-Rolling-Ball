@@ -21,4 +21,16 @@ public class playercontroller : MonoBehaviour
        Vector3 direction = new Vector3(moveHorizontal, moveVertical, 0);
        transform.Translate(direction * speed * Time.deltaTime); 
     }
+       private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("collectable"))
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Collected!");
+            score = score + 1;
+            Debug.Log("Score: " + score);
+                       
+				
+		}
+}
 }
