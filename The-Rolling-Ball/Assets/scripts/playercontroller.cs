@@ -47,7 +47,7 @@ public class playercontroller : MonoBehaviour
 			
 		}
         // WIN condition
-		if (score >= 3 && hasKey == true && !hasWater)
+		if (score >= 15 && hasKey == true && !hasWater)
 		{
 			Debug.Log("You Won!");
 		}
