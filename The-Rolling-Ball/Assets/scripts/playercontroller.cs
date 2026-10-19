@@ -1,4 +1,8 @@
 using UnityEngine;
+using TMPro;
+
+
+
 
 public class playercontroller : MonoBehaviour
 {
@@ -6,11 +10,13 @@ public class playercontroller : MonoBehaviour
     public int score = 0;
     public bool hasKey = false;
     public bool hasWater = false;
+    public TextMeshProUGUI textScore;
+	public TextMeshProUGUI notificationText;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+         UpdateTextScore();
     }
 
     // Update is called once per frame
@@ -25,31 +31,75 @@ public class playercontroller : MonoBehaviour
     }
        private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("collectable"))
+        
+         int poinsGained = CalculatePointsByTag(other.tag);
+
+        if (poinsGained > 0)
         {
+            score += poinsGained;
+            UpdateTextScore();
+            ShowNotification("+" + poinsGained + " points!");
             Destroy(other.gameObject);
-            Debug.Log("Collected!");
-            score = score + 1;
-            Debug.Log("Score: " + score);
-                       
-				
-		}
+        }
+
         if (other.CompareTag("key"))
         {
             hasKey = true;
-			Debug.Log("You got the Key!");
+			ShowNotification("You got the Key!");
 			Destroy(other.gameObject);
 		}
+
+
+
+
+
+
 		if (other.CompareTag("Water"))
 		{
 			hasWater = true;
 			Debug.Log("You has touched the water and cannot win");
+            ShowNotification("You has touched the water and cannot win");
 			
 		}
         // WIN condition
 		if (score >= 15 && hasKey == true && !hasWater)
 		{
 			Debug.Log("You Won!");
+            ShowNotification("You Won!");
 		}
+    }
+
+void UpdateTextScore ()
+    {
+        textScore.text = "Score: " + score;
+    }
+
+    void ShowNotification(string message)
+    {
+        notificationText.text = message;
+    }
+
+    int CalculatePointsByTag (string objectTag)
+    {
+        if (objectTag == "Collectable")
+        {
+           return 1; 
+        }
+        else if (objectTag == "Collectable2")
+        {
+           return 2; 
+        }
+        else if (objectTag == "Collectable3")
+        {
+           return 3; 
+        }
+        else
+        {
+            return 0;
+        }
+    }
+ 
+
+
 }
-}
+
