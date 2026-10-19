@@ -46,5 +46,10 @@ public class playercontroller : MonoBehaviour
 			Debug.Log("You has touched the water and cannot win");
 			
 		}
+        // WIN condition
+		if (score >= 3 && hasKey == true && !hasWater)
+		{
+			Debug.Log("You Won!");
+		}
 }
 }
