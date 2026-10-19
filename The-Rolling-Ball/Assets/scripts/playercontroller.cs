@@ -81,15 +81,15 @@ void UpdateTextScore ()
 
     int CalculatePointsByTag (string objectTag)
     {
-        if (objectTag == "Collectable")
+        if (objectTag == "collectable")
         {
            return 1; 
         }
-        else if (objectTag == "Collectable2")
+        else if (objectTag == "collectable2")
         {
            return 2; 
         }
-        else if (objectTag == "Collectable3")
+        else if (objectTag == "collectable3")
         {
            return 3; 
         }
