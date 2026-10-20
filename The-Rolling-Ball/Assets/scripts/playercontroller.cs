@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 
@@ -12,16 +13,36 @@ public class playercontroller : MonoBehaviour
     public bool hasWater = false;
     public TextMeshProUGUI textScore;
 	public TextMeshProUGUI notificationText;
+    public GameObject storyPanel;
+    private bool isStoryActive = true;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (storyPanel != null)
+        {
+            storyPanel.SetActive(true);
+        }
+
          UpdateTextScore();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (isStoryActive)
+        {
+            if (Input.GetMouseButtonDown(0)) 
+            {
+                if (storyPanel != null)
+                {
+                    storyPanel.SetActive(false); 
+                }
+                isStoryActive = false; 
+            }
+            return; 
+        }
         // Leemos la entrada del teclado WASD o Flechas
        float moveHorizontal = Input.GetAxis("Horizontal");
        float moveVertical = Input.GetAxis("Vertical");
@@ -47,10 +68,9 @@ public class playercontroller : MonoBehaviour
             hasKey = true;
 			ShowNotification("You got the Key!");
 			Destroy(other.gameObject);
+
+            UpdateTextScore();
 		}
-
-
-
 
 
 
@@ -59,6 +79,8 @@ public class playercontroller : MonoBehaviour
 			hasWater = true;
 			Debug.Log("You has touched the water and cannot win");
             ShowNotification("You has touched the water and cannot win");
+
+            Invoke("RestartLevel", 1.5f);
 			
 		}
         // WIN condition
@@ -69,9 +91,15 @@ public class playercontroller : MonoBehaviour
 		}
     }
 
+    void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 void UpdateTextScore ()
     {
-        textScore.text = "Score: " + score;
+      string keyStatus = hasKey ? "1/1" : "0/1";
+    textScore.text = "Score: " + score + "/15 | Key: " + keyStatus;
     }
 
     void ShowNotification(string message)
