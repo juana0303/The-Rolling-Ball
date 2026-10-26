@@ -99,7 +99,7 @@ public class playercontroller : MonoBehaviour
 void UpdateTextScore ()
     {
       string keyStatus = hasKey ? "1/1" : "0/1";
-    textScore.text = "Score: " + score + "/15 | Key: " + keyStatus;
+    textScore.text = "Score: " + score + "/15"  + keyStatus;
     }
 
     void ShowNotification(string message)
