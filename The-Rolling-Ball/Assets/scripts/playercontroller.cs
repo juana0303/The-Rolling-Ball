@@ -15,7 +15,8 @@ public class playercontroller : MonoBehaviour
 	public TextMeshProUGUI notificationText;
     public GameObject storyPanel;
     private bool isStoryActive = true;
-    
+    public GameObject pausePanel;
+    public GameObject settingsPanelInGame;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -99,7 +100,7 @@ public class playercontroller : MonoBehaviour
 void UpdateTextScore ()
     {
       string keyStatus = hasKey ? "1/1" : "0/1";
-    textScore.text = "Score: " + score + "/15"  + keyStatus;
+    textScore.text = "Score: " + score + "/15   key "  + keyStatus;
     }
 
     void ShowNotification(string message)
@@ -126,8 +127,41 @@ void UpdateTextScore ()
             return 0;
         }
     }
- 
+    
 
+    // Pausa o reanuda el juego mediante código
+    public void TogglePause()
+    {
+        if (pausePanel != null)
+        {
+            bool isPaused = pausePanel.activeSelf;
+            
+            if (isPaused)
+            {
+                pausePanel.SetActive(false);
+                Time.timeScale = 1f; // Reanuda el tiempo
+            }
+            else
+            {
+                pausePanel.SetActive(true);
+                Time.timeScale = 0f; // Detiene el tiempo
+            }
+        }
+    }
+
+    // Botón: Volver al menú principal
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f; // Asegúrate de restaurar el tiempo antes de cambiar de escena
+        SceneManager.LoadScene("Menu"); // Reemplaza con el nombre exacto de tu escena de menú
+    }
+public void OpenSettingsInGame(bool open)
+    {
+        if (settingsPanelInGame != null)
+        {
+            settingsPanelInGame.SetActive(open);
+        }
+    }
 
 }
 
