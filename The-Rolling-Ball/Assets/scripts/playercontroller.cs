@@ -17,6 +17,10 @@ public class playercontroller : MonoBehaviour
     private bool isStoryActive = true;
     public GameObject pausePanel;
     public GameObject settingsPanelInGame;
+    public GameObject GameoverPanel;
+    public GameObject winPanel;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -79,21 +83,25 @@ public class playercontroller : MonoBehaviour
 		{
 			hasWater = true;
 			Debug.Log("You has touched the water and cannot win");
-            ShowNotification("You has touched the water and cannot win");
+            //ShowNotification("You has touched the water and cannot win");
 
-            Invoke("RestartLevel", 1.5f);
+            //Invoke("RestartLevel", 1.5f);
+            GameoverPanel.SetActive(true);
 			
 		}
         // WIN condition
 		if (score >= 15 && hasKey == true && !hasWater)
 		{
 			Debug.Log("You Won!");
-            ShowNotification("You Won!");
+            //ShowNotification("You Won!");
+            winPanel.SetActive(true);
+
+    
 		}
     }
-
-    void RestartLevel()
+public void RestartLevel()
     {
+        Time.timeScale = 1f; // Restaura el tiempo normal antes de reiniciar
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -129,7 +137,7 @@ void UpdateTextScore ()
     }
     
 
-    // Pausa o reanuda el juego mediante código
+    // Pausa o reanuda el juego 
     public void TogglePause()
     {
         if (pausePanel != null)
@@ -152,8 +160,8 @@ void UpdateTextScore ()
     // Botón: Volver al menú principal
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f; // Asegúrate de restaurar el tiempo antes de cambiar de escena
-        SceneManager.LoadScene("Menu"); // Reemplaza con el nombre exacto de tu escena de menú
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene("Menu"); 
     }
 public void OpenSettingsInGame(bool open)
     {
